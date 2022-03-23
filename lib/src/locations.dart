@@ -79,11 +79,28 @@ class Locations {
 }
 
 Future<Locations> getGoogleOffices() async {
-  const googleLocationsURL = "https://about.google/static/data/locations.json";
   // Retrieve the locations of Google offices
+  Map<String, String> requestHeaders = {
+    // 'Content-type': 'application/json',
+    // 'Accept': 'application/json',
+    'X-RapidAPI-Host': 'trueway-places.p.rapidapi.com',
+    'X-RapidAPI-Key': '68ff2876d4msh5f796efcc75f6f5p1549efjsndf9ed55c25e2'
+  };
+
+  const String location = "37.783366,-122.402325";
+  const String type = "cafe";
+  const String radius = "100";
+  const String language = "en";
+
+  const googleLocationsURL =
+      'https://trueway-places.p.rapidapi.com/FindPlacesNearby?location=$location&type=$type&radius=$radius&language=$language';
+
   try {
-    final response = await http.get(Uri.parse(googleLocationsURL));
+    final response =
+        await http.get(Uri.parse(googleLocationsURL), headers: requestHeaders);
     if (response.statusCode == 200) {
+      print("Sahi hai bhai");
+      print(json.decode(response.body));
       return Locations.fromJson(json.decode(response.body));
     }
   } catch (e) {
@@ -91,6 +108,7 @@ Future<Locations> getGoogleOffices() async {
   }
 
   // Fallback for when the above HTTP request fails.
+  print("Lag gaye");
   return Locations.fromJson(
     json.decode(
       await rootBundle.loadString('assets/locations.json'),
