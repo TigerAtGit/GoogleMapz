@@ -40,14 +40,12 @@ class Region {
 @JsonSerializable()
 class Office {
   Office({
-    required this.address,
     required this.id,
-    required this.image,
+    required this.name,
+    required this.address,
     required this.lat,
     required this.lng,
-    required this.name,
-    required this.phone,
-    required this.region,
+    required this.distance,
   });
 
   factory Office.fromJson(Map<String, dynamic> json) => _$OfficeFromJson(json);
@@ -55,12 +53,10 @@ class Office {
 
   final String address;
   final String id;
-  final String image;
   final double lat;
   final double lng;
   final String name;
-  final String phone;
-  final String region;
+  final String? distance;
 }
 
 @JsonSerializable()
